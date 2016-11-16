@@ -3,6 +3,7 @@ Ext.define('Checkers.view.main.StatsPanel',{
     xtype: 'statspanel',
     title: 'Game Stats',
     border: true,
+    collapsible: true,
     cls: 'x-checkers-stats',
     layout: {
         type: 'vbox',
@@ -29,12 +30,12 @@ Ext.define('Checkers.view.main.StatsPanel',{
     },{
         xtype: 'label',
         bind: {
-            html: '<span class="property">Total Clear Pieces:</span> <span class="value">{clearPieces}</span>'
+            html: '<span class="property">Remaining Clear Pieces:</span> <span class="value">{clearPieces}</span>'
         }
     },{
         xtype: 'label',
         bind: {
-            html: '<span class="property">Total Clear Pieces:</span> <span class="value">{darkPieces}</span>'
+            html: '<span class="property">Remaining Dark Pieces:</span> <span class="value">{darkPieces}</span>'
         }
     },{
         xtype: 'label',
