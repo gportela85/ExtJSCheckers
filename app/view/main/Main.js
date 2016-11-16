@@ -1,13 +1,17 @@
 Ext.define('Checkers.view.main.Main',{
     extend: 'Ext.panel.Panel',
     requires: [
-        'Checkers.view.board.Board'
+        'Checkers.view.main.MainController',
+        'Checkers.view.board.Board',
+        'Checkers.view.main.StatsPanel'
     ],
     title: 'ExtJS Checkers',
+    cls: 'x-checkers',
+    controller: 'MainController',
     viewModel: {
         data: {
             turn: 'clear',
-            gameTime: null,
+            gameTime: '00:00:00',
             clearMoves: 0,
             darkMoves: 0,
             clearPieces: 12,
@@ -16,50 +20,22 @@ Ext.define('Checkers.view.main.Main',{
     },
     layout: {
         type: 'hbox',
-        align: 'middle',
-        pack: 'center'
+        align: 'stretch'
     },
-    tbar: [{
-        text: 'Restart Game',
-        handler: function(b) {
-            var panel = b.up('panel'),
-                board = panel.down('checkersboard');
-
-            board.getController().restartGame();
-            
-        }
-    },{
-        xtype: 'label',
-        bind: {
-            text: 'Turn: {turn}'
-        }
-    },{
-        xtype: 'label',
-        bind: {
-            text: 'Clear Piece Moves: {clearMoves}'
-        }
-    },{
-        xtype: 'label',
-        bind: {
-            text: 'Dark Piece Moves: {darkMoves}'
-        }
-    },{
-        xtype: 'label',
-        bind: {
-            text: 'Total Clear Pieces: {clearPieces}'
-        }
-    },{
-        xtype: 'label',
-        bind: {
-            text: 'Total Clear Pieces: {darkPieces}'
-        }
-    },{
-        xtype: 'label',
-        bind: {
-            text: 'Total Game Time: {gameTime}'
-        }
-    }],
     items: [{
-        xtype: 'checkersboard'
+        xtype: 'container',
+        layout: 'center',
+        flex: 1,
+        items: [{
+            xtype: 'checkersboard',
+            reference: 'checkersboard'
+        }]
+    },{
+        xtype: 'container',
+        margin: 5,
+        width: 200,
+        items: [{
+            xtype: 'statspanel'
+        }]
     }]
 });

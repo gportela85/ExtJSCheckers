@@ -56,8 +56,7 @@ Ext.define('Checkers.view.piece.Piece', {
         }
     },
     activate: function(enable) {
-        var me = this,
-            vm = this.getSurface().lookupViewModel();
+        var vm = this.getSurface().lookupViewModel();
 
         this.setStatus(enable ? 'active' : 'rest');
         vm.set('activePiece', enable ? this : null);

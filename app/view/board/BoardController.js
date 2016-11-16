@@ -110,7 +110,7 @@ Ext.define('Checkers.view.board.BoardController',{
             isPiece = sprite.tile,
             activePiece = vm.get('activePiece'),
             activeType = activePiece && activePiece.type,
-            checkForAdditionalMoves;
+            checkForAdditionalMoves, moves;
 
         if (isPiece) {
             if (sprite.type !== vmParent.get('turn') || !this.validPieceSelection(sprite)) {
@@ -137,7 +137,11 @@ Ext.define('Checkers.view.board.BoardController',{
                     vmParent.set('turn', activeType === 'clear' ? 'dark' : 'clear');
                     activePiece.activate(false);
                 }
-                vmParent.set(activeType + 'Moves', vmParent.get(activeType + 'Moves') + 1);
+                vmParent.set(activeType + 'Moves', moves = vmParent.get(activeType + 'Moves') + 1);
+                if (moves === 1) {
+                    //debugger;
+                    vmParent.getView().getController().startTimer();
+                }
                 if ((sprite.position.y === 0 && activePiece.type === 'clear' || sprite.position.y === 7 && activePiece.type === 'dark') && !activePiece.isKing) {
                     activePiece.setKing();
                 }
@@ -334,7 +338,7 @@ Ext.define('Checkers.view.board.BoardController',{
         Ext.Msg.alert('Game Over', winner + ' won the game!');
     },
 
-    restartGame: function() {
+    resetBoard: function() {
         var vm = this.getViewModel(),
             types = vm.get('types');
 
@@ -347,22 +351,6 @@ Ext.define('Checkers.view.board.BoardController',{
         this.renderPieces(types);
 
         this.getView().getSurface().renderFrame();
-
-        this.resetGameStats();
-    },
-
-    resetGameStats: function() {
-        var vm = this.getViewModel(),
-            parentVM = vm.getParent();
-
-        parentVM.set({
-            turn: 'clear',
-            gameTime: null,
-            clearMoves: 0,
-            darkMoves: 0,
-            clearPieces: 12,
-            darkPieces: 12
-        });
     },
 
     wipeBoardPieces: function(types) {
